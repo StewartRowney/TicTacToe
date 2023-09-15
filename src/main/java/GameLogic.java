@@ -23,7 +23,7 @@ public class GameLogic {
 
             if (checkWinner()){
                 gameFinished = true;
-                System.out.println("You are a winner " + player.getPlayerName());
+                System.out.println("You are a winner: " + player.getPlayerName());
             }
 
             if (player == players[0]) {
