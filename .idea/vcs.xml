@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="VcsDirectoryMappings">
+<<<<<<< HEAD
+    <mapping directory="" vcs="Git" />
+=======
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/https:/github.com/StewartRowney/TicTacToe.git" vcs="Git" />
+>>>>>>> e0cd568852f68bfad3d62cf1e60eb9b14550a85a
   </component>
 </project>
