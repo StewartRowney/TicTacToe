@@ -2,6 +2,10 @@ public class Board {
 
     private char[][] board = new char[3][3];
 
+    public char[][] getBoard() {
+        return board;
+    }
+
     public void createBoard() {
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[0].length; j++) {
@@ -23,7 +27,7 @@ public class Board {
                 System.out.println("\n---+---+---");
             }
         }
-        System.out.println();
+        System.out.println("\n");
     }
 
     public void addPieceToBoard(char symbol, int row, int column) {
