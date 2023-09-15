@@ -21,6 +21,11 @@ public class GameLogic {
         while (!gameFinished) {
             makeMove(player);
 
+            if (checkWinner()){
+                gameFinished = true;
+                System.out.println("You are a winner " + player.getPlayerName());
+            }
+
             if (player == players[0]) {
                 player = players[1];
             }
@@ -28,7 +33,7 @@ public class GameLogic {
                 player = players[0];
             }
 
-            gameFinished = checkWinner();
+
         }
     }
 
