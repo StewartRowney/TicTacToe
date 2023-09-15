@@ -7,5 +7,7 @@ public class Main {
 //        board.addPieceToBoard('X', 3, 2);
 //        board.printBoard();
 
+        TicTacToeGame newGame = new TicTacToeGame();
+        newGame.mainTicTacToeApp();
     }
 }
