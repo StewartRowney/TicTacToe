@@ -25,6 +25,10 @@ public class GameLogic {
                 gameFinished = true;
                 System.out.println("You are a winner: " + player.getPlayerName());
             }
+            else if (checkDraw()){
+                gameFinished = true;
+                System.out.println("There was a draw.");
+            }
 
             if (player == players[0]) {
                 player = players[1];
@@ -32,8 +36,6 @@ public class GameLogic {
             else {
                 player = players[0];
             }
-
-
         }
     }
 
@@ -103,6 +105,19 @@ public class GameLogic {
         return checkDiagonals(currentBoard);
     }
 
+    private boolean checkDraw() {
+        char[][] currentBoard = board.getBoard();
+
+        for (int i = 0; i < currentBoard[0].length; i++) {
+            for (int j = 0; j < currentBoard.length; j++) {
+                if (currentBoard[i][j] == ' ') {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
     private boolean checkRow(int i, char[][] currentBoard) {
         if ((currentBoard[i][0] == currentBoard[i][1] && currentBoard[i][0] == currentBoard[i][2]) && currentBoard[i][0] != ' ') {
             return true;
@@ -123,50 +138,4 @@ public class GameLogic {
         }
         else return (currentBoard[0][2] == currentBoard[1][1] && currentBoard[2][0] == currentBoard[0][2]) && currentBoard[1][1] != ' ';
     }
-
-//    static String turn;
-//    Scanner scanner = new Scanner(System.in);
-//    Board board = new Board();
-//
-//
-//    turn = "X";
-//    String winner = null;
-//    for (int a = 0; a < 9; a++) { board[a] = String.valueOf(a + 1);
-//        System.out.println("Welcome to 3x3 Tic Tac Toe.");
-//        printBoard();
-//        System.out.println("x will play first. Enter a slot number to place X in:");
-//        while(winner == null) {
-//            int numInput;
-//// Exception handling.
-//// numInput will take input from user like from 1 to 9 .
-//// If it is not in range from 1 to 9.
-//// then it will show you an error "Invalid input."
-//try {
-//            numInput = scanner.nextInt();
-//            if (!(numInput > 0 && numInput <= 9)) { System.out.println("Invalid input; re-enter slot number:");
-//                continue;
-//catch (InputMismatchException e) {
-//                    System.out.println("Invalid input; re-enter slot number: ");
-//                    continue;
-//                }
-//// This game has two player x and 0.
-//// Here is the logic to decide the turn.
-//    if (board[numInput - 1].equals(
-//                String.valueOf(numInput))) {
-//                    board [numInput 1] = turn;
-//                    if (turn.equals("X")) {
-//                        turn = "0";
-//                    }
-//                    else {
-//                        turn = "X";
-//                    }
-//                    printBoard();
-//                    winner checkWinner();
-//                }
-//    else {
-//                    System.out.println("Slot already taken; re-enter slot number:");
-//                }
-//            }
-//        }
-
 }
