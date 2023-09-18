@@ -2,28 +2,26 @@ import java.util.Scanner;
 
 public class TicTacToeGame {
     Scanner myScanner = new Scanner(System.in);
-    boolean gameIsRunning = true;
-    String option;
 
     void mainTicTacToeApp() {
         drawMainDesign();
+        boolean gameIsRunning = true;
+
         while (gameIsRunning) {
-            initializeGame();
+            gameIsRunning = initializeGame();
         }
     }
 
-    private void initializeGame() {
-
-        option = presentMenu();
-        switch (option) {
-            case "1" -> addPlayersAndStartGame();
+    private boolean initializeGame() {
+        switch (presentMenu()) {
+            case "1" -> {addPlayersAndStartGame(); return true;}
             case "2" -> {
                 System.out.println("Thanks for playing");
-                gameIsRunning = false;
+                return false;
             }
             default -> {
                 System.out.println("That's not a valid input, please try again");
-                initializeGame();
+                return initializeGame();
             }
         }
     }
