@@ -108,8 +108,8 @@ public class GameLogic {
     private boolean checkDraw() {
         char[][] currentBoard = board.getBoard();
 
-        for (int i = 0; i < currentBoard[0].length; i++) {
-            for (int j = 0; j < currentBoard.length; j++) {
+        for (int i = 0; i < currentBoard.length; i++) {
+            for (int j = 0; j < currentBoard[0].length; j++) {
                 if (currentBoard[i][j] == ' ') {
                     return false;
                 }
