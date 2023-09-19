@@ -3,7 +3,7 @@ import java.util.Scanner;
 public class GameLogic {
 
     Player[] players = new Player[2];
-    Board board = new Board();
+    Board board = new Board(3);
     Scanner scanner = new Scanner(System.in);
 
     public GameLogic(Player player1, Player player2) {
@@ -12,7 +12,6 @@ public class GameLogic {
     }
 
     public void startGame() {
-        board.createBoard();
         board.printBoard();
 
         boolean  gameFinished = false;
@@ -88,15 +87,15 @@ public class GameLogic {
     private boolean checkWinner() {
         char[][] currentBoard = board.getBoard();
 
-        for (int i = 0; i < currentBoard[0].length; i++) {
+        for (int i = 0; i < board.getHeight(); i++) {
             boolean rowWin = checkRow(i, currentBoard);
             if (rowWin) {
                 return true;
             }
         }
 
-        for (int i = 0; i < currentBoard.length; i++) {
-            boolean columnWin = checkColumn(i, currentBoard);
+        for (int j = 0; j < board.getWidth(); j++) {
+            boolean columnWin = checkColumn(j, currentBoard);
             if (columnWin) {
                 return true;
             }
@@ -108,8 +107,8 @@ public class GameLogic {
     private boolean checkDraw() {
         char[][] currentBoard = board.getBoard();
 
-        for (int i = 0; i < currentBoard.length; i++) {
-            for (int j = 0; j < currentBoard[0].length; j++) {
+        for (int i = 0; i < board.getHeight(); i++) {
+            for (int j = 0; j < board.getWidth(); j++) {
                 if (currentBoard[i][j] == ' ') {
                     return false;
                 }
@@ -119,23 +118,55 @@ public class GameLogic {
     }
 
     private boolean checkRow(int i, char[][] currentBoard) {
-        if ((currentBoard[i][0] == currentBoard[i][1] && currentBoard[i][0] == currentBoard[i][2]) && currentBoard[i][0] != ' ') {
+        if (currentBoard[i][0] != ' ') {
+            for (int j = 1; j < board.getWidth(); j++) {
+                if (currentBoard[i][0] != currentBoard[i][j]) {
+                    return false;
+                }
+            }
             return true;
         }
         return false;
     }
 
-    private boolean checkColumn(int i, char[][] currentBoard) {
-        if ((currentBoard[0][i] == currentBoard[1][i] && currentBoard[0][i] == currentBoard[2][i]) && currentBoard[0][i] != ' '){
+    private boolean checkColumn(int j, char[][] currentBoard) {
+        if (currentBoard[0][j] != ' ') {
+            for (int i = 1; i < board.getHeight(); i++) {
+                if (currentBoard[0][j] != currentBoard[i][j]) {
+                    return false;
+                }
+            }
             return true;
         }
         return false;
     }
 
     private boolean checkDiagonals(char[][] currentBoard) {
-        if ((currentBoard[0][0] == currentBoard[1][1] && currentBoard[0][0] == currentBoard[2][2]) && currentBoard[0][0] != ' ') {
+
+        if (currentBoard[0][0] != ' ') {
+            boolean firstDiagonalWinner = true;
+
+            for (int a = 1; a < board.getHeight(); a++) {
+                if (currentBoard[0][0] != currentBoard[a][a]) {
+                    firstDiagonalWinner = false;
+                    break;
+                }
+            }
+
+            if (firstDiagonalWinner) {
+                return true;
+            }
+        }
+
+        if (currentBoard[0][board.getWidth() - 1] != ' ') {
+            for (int a = 1; a < board.getWidth(); a++) {
+                if (currentBoard[0][board.getWidth() - 1] != currentBoard[a][board.getWidth() - 1 - a]) {
+                    return false;
+                }
+            }
             return true;
         }
-        else return (currentBoard[0][2] == currentBoard[1][1] && currentBoard[2][0] == currentBoard[0][2]) && currentBoard[1][1] != ' ';
+
+        return false;
     }
 }

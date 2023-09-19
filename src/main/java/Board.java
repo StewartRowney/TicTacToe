@@ -1,14 +1,29 @@
 public class Board {
 
-    private char[][] board = new char[3][3];
+    private final char[][] board;
+    private final int height;
+    private final int width;
+
+    Board(int mapSize) {
+        height = mapSize;
+        width = mapSize;
+        board = new char[height][width];
+        createBoard();
+    }
 
     public char[][] getBoard() {
         return board;
     }
+    public int getHeight() {
+        return height;
+    }
+    public int getWidth() {
+        return width;
+    }
 
-    public void createBoard() {
-        for (int i = 0; i < board.length; i++) {
-            for (int j = 0; j < board[0].length; j++) {
+    private void createBoard() {
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
                 board[i][j] = ' ';
             }
         }
@@ -16,14 +31,14 @@ public class Board {
 
     public void printBoard() {
         System.out.println();
-        for (int i = 0; i < board.length; i++) {
-            for (int j = 0; j < board[0].length; j++) {
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
                 System.out.printf(" %s ",board[i][j]);
-                if (j != board[0].length - 1) {
+                if (j != width - 1) {
                     System.out.print("|");
                 }
             }
-            if (i != board.length - 1) {
+            if (i != height - 1) {
                 System.out.println("\n---+---+---");
             }
         }
