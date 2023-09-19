@@ -18,9 +18,9 @@ public class GameLogic {
         Player player = players[randomlySelectPlayerIndex()];
 
         while (!gameFinished) {
-            makeMove(player);
+            Location location = makeMove(player);
 
-            if (checkWinner()){
+            if (checkWinner(location)){
                 gameFinished = true;
                 System.out.println("You are a winner: " + player.getPlayerName());
             }
@@ -38,25 +38,26 @@ public class GameLogic {
         }
     }
 
-    private void makeMove(Player player) {
+    private Location makeMove(Player player) {
         System.out.printf("%s's turn\n", player.getPlayerName());
         int row = validateIntInput("Enter row: ");
         int column = validateIntInput("Enter column: ");
+        Location location = new Location(row, column);
 
-        if (validateMove(row, column)) {
-            board.addPieceToBoard(player.getPlayerCharacter(), row, column);
+        if (validateMove(location)) {
+            board.addPieceToBoard(player.getPlayerCharacter(), location);
             board.printBoard();
+            return location;
         }
         else {
             System.out.println("That space is already occupied");
-            makeMove(player);
+            return makeMove(player);
         }
-
     }
 
-    private boolean validateMove(int row, int column) {
+    private boolean validateMove(Location location) {
         char[][] currentBoard = board.getBoard();
-        return (currentBoard[row - 1][column - 1] == ' ');
+        return (currentBoard[location.getRow() - 1][location.getColumn() - 1] == ' ');
     }
 
     private int validateIntInput(String question) {
@@ -84,21 +85,17 @@ public class GameLogic {
         return (int) turn;
     }
 
-    private boolean checkWinner() {
+    private boolean checkWinner(Location newPieceLocation) {
         char[][] currentBoard = board.getBoard();
 
-        for (int i = 0; i < board.getHeight(); i++) {
-            boolean rowWin = checkRow(i, currentBoard);
-            if (rowWin) {
-                return true;
-            }
+        boolean rowWin = checkRow(newPieceLocation.getRow(), currentBoard);
+        if (rowWin) {
+            return true;
         }
 
-        for (int j = 0; j < board.getWidth(); j++) {
-            boolean columnWin = checkColumn(j, currentBoard);
-            if (columnWin) {
-                return true;
-            }
+        boolean columnWin = checkColumn(newPieceLocation.getColumn(), currentBoard);
+        if (columnWin) {
+            return true;
         }
 
         return checkDiagonals(currentBoard);
@@ -117,10 +114,10 @@ public class GameLogic {
         return true;
     }
 
-    private boolean checkRow(int i, char[][] currentBoard) {
-        if (currentBoard[i][0] != ' ') {
+    private boolean checkRow(int row, char[][] currentBoard) {
+        if (currentBoard[row - 1][0] != ' ') {
             for (int j = 1; j < board.getWidth(); j++) {
-                if (currentBoard[i][0] != currentBoard[i][j]) {
+                if (currentBoard[row - 1][0] != currentBoard[row - 1][j]) {
                     return false;
                 }
             }
@@ -129,10 +126,10 @@ public class GameLogic {
         return false;
     }
 
-    private boolean checkColumn(int j, char[][] currentBoard) {
-        if (currentBoard[0][j] != ' ') {
+    private boolean checkColumn(int column, char[][] currentBoard) {
+        if (currentBoard[0][column - 1] != ' ') {
             for (int i = 1; i < board.getHeight(); i++) {
-                if (currentBoard[0][j] != currentBoard[i][j]) {
+                if (currentBoard[0][column - 1] != currentBoard[i][column - 1]) {
                     return false;
                 }
             }

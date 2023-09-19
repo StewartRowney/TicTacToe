@@ -45,8 +45,8 @@ public class Board {
         System.out.println("\n");
     }
 
-    public void addPieceToBoard(char symbol, int row, int column) {
-        board[row - 1][column - 1] = symbol;
+    public void addPieceToBoard(char symbol, Location location) {
+        board[location.getRow() - 1][location.getColumn() - 1] = symbol;
     }
 
 }
