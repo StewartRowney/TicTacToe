@@ -11,7 +11,7 @@ class GameLogicTest {
     public void initialiseGame() {
         Player player1 = new Player("Player 1", 'X');
         Player player2 = new Player("Player 2", 'O');
-        gameLogic = new GameLogic( player1, player2);
+        gameLogic = new GameLogic( player1, player2, 3);
     }
 
     @Test

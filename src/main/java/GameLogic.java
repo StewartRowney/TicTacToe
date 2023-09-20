@@ -5,12 +5,13 @@ import java.util.Scanner;
 public class GameLogic {
 
     Player[] players = new Player[2];
-    Board board = new Board(3);
+    Board board;
     Scanner scanner = new Scanner(System.in);
 
-    public GameLogic(Player player1, Player player2) {
+    public GameLogic(Player player1, Player player2, int mapSize) {
         players[0] = player1;
         players[1] = player2;
+        board = new Board(mapSize);
     }
 
     public void startGame() {
