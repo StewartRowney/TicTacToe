@@ -10,15 +10,17 @@ public class Board {
         board = new char[height][width];
         createBoard();
     }
-
-    public char[][] getBoard() {
-        return board;
-    }
     public int getHeight() {
         return height;
     }
     public int getWidth() {
         return width;
+    }
+    public char getValueAt(int x, int y) {
+        return board[x][y];
+    }
+    public char getValueAt(Location location) {
+        return board[location.row() - 1][location.column() - 1];
     }
 
     private void createBoard() {
@@ -33,7 +35,7 @@ public class Board {
         System.out.println();
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
-                System.out.printf(" %s ",board[i][j]);
+                System.out.printf(" %s ", getValueAt(i, j));
                 if (j != width - 1) {
                     System.out.print("|");
                 }
@@ -46,7 +48,7 @@ public class Board {
     }
 
     public void addPieceToBoard(char symbol, Location location) {
-        board[location.getRow() - 1][location.getColumn() - 1] = symbol;
+        board[location.row() - 1][location.column() - 1] = symbol;
     }
 
 }

@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.EnumSet;
 import java.util.Scanner;
 
 public class GameLogic {
@@ -20,7 +22,7 @@ public class GameLogic {
         while (!gameFinished) {
             Location location = makeMove(player);
 
-            if (checkWinner(location)){
+            if (checkLocationForWinner(location)){
                 gameFinished = true;
                 System.out.println("You are a winner: " + player.getPlayerName());
             }
@@ -56,8 +58,7 @@ public class GameLogic {
     }
 
     private boolean validateMove(Location location) {
-        char[][] currentBoard = board.getBoard();
-        return (currentBoard[location.getRow() - 1][location.getColumn() - 1] == ' ');
+        return (board.getValueAt(location) == ' ');
     }
 
     private int validateIntInput(String question) {
@@ -85,85 +86,61 @@ public class GameLogic {
         return (int) turn;
     }
 
-    private boolean checkWinner(Location newPieceLocation) {
-        char[][] currentBoard = board.getBoard();
+    private boolean checkLocationForWinner(Location location) {
 
-        boolean rowWin = checkRow(newPieceLocation.getRow(), currentBoard);
-        if (rowWin) {
-            return true;
+        ArrayList<CheckLine> lines = new ArrayList<>(EnumSet.allOf(CheckLine.class));
+
+        if (location.row() != location.column()) {
+            lines.remove(CheckLine.LEFT_DIAGONAL);
         }
 
-        boolean columnWin = checkColumn(newPieceLocation.getColumn(), currentBoard);
-        if (columnWin) {
-            return true;
+        if (location.row() != board.getHeight() - location.column() + 1) {
+            lines.remove(CheckLine.RIGHT_DIAGONAL);
         }
 
-        return checkDiagonals(currentBoard);
+        for (CheckLine line : lines) {
+            if (checkLineForWinner(line, location)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    private boolean checkLineForWinner(CheckLine line, Location location) {
+        char symbol = board.getValueAt(location);
+        boolean winner = false;
+        
+        for (CheckDirection direction : line.directions) {
+            try {
+                if (!checkNeighbourForWinner(symbol, direction.getNextLocation(location), direction)) {
+                    return false;
+                }
+            }
+            catch (ArrayIndexOutOfBoundsException ex) {
+                winner = true;
+            }
+        }
+
+        return winner;
+    }
+
+    private boolean checkNeighbourForWinner(char symbol, Location neighbourLocation, CheckDirection direction) throws ArrayIndexOutOfBoundsException{
+
+        if (symbol != board.getValueAt(neighbourLocation)) {
+            return false;
+        }
+
+        return checkNeighbourForWinner(symbol, direction.getNextLocation(neighbourLocation), direction);
     }
 
     private boolean checkDraw() {
-        char[][] currentBoard = board.getBoard();
-
         for (int i = 0; i < board.getHeight(); i++) {
             for (int j = 0; j < board.getWidth(); j++) {
-                if (currentBoard[i][j] == ' ') {
+                if (board.getValueAt(i, j) == ' ') {
                     return false;
                 }
             }
         }
         return true;
-    }
-
-    private boolean checkRow(int row, char[][] currentBoard) {
-        if (currentBoard[row - 1][0] != ' ') {
-            for (int j = 1; j < board.getWidth(); j++) {
-                if (currentBoard[row - 1][0] != currentBoard[row - 1][j]) {
-                    return false;
-                }
-            }
-            return true;
-        }
-        return false;
-    }
-
-    private boolean checkColumn(int column, char[][] currentBoard) {
-        if (currentBoard[0][column - 1] != ' ') {
-            for (int i = 1; i < board.getHeight(); i++) {
-                if (currentBoard[0][column - 1] != currentBoard[i][column - 1]) {
-                    return false;
-                }
-            }
-            return true;
-        }
-        return false;
-    }
-
-    private boolean checkDiagonals(char[][] currentBoard) {
-
-        if (currentBoard[0][0] != ' ') {
-            boolean firstDiagonalWinner = true;
-
-            for (int a = 1; a < board.getHeight(); a++) {
-                if (currentBoard[0][0] != currentBoard[a][a]) {
-                    firstDiagonalWinner = false;
-                    break;
-                }
-            }
-
-            if (firstDiagonalWinner) {
-                return true;
-            }
-        }
-
-        if (currentBoard[0][board.getWidth() - 1] != ' ') {
-            for (int a = 1; a < board.getWidth(); a++) {
-                if (currentBoard[0][board.getWidth() - 1] != currentBoard[a][board.getWidth() - 1 - a]) {
-                    return false;
-                }
-            }
-            return true;
-        }
-
-        return false;
     }
 }
