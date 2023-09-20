@@ -68,7 +68,7 @@ public class GameLogic {
 
         try {
             number = Integer.parseInt(input);
-            if (number < 1 || number > 3) {
+            if (number < 1 || number > board.getHeight()) {
                 System.out.println("Enter a valid input");
                 return validateIntInput(question);
             }
@@ -86,7 +86,7 @@ public class GameLogic {
         return (int) turn;
     }
 
-    private boolean checkLocationForWinner(Location location) {
+    protected boolean checkLocationForWinner(Location location) {
 
         ArrayList<CheckLine> lines = new ArrayList<>(EnumSet.allOf(CheckLine.class));
 
@@ -106,7 +106,7 @@ public class GameLogic {
         return false;
     }
     
-    private boolean checkLineForWinner(CheckLine line, Location location) {
+    protected boolean checkLineForWinner(CheckLine line, Location location) {
         char symbol = board.getValueAt(location);
         boolean winner = false;
         
@@ -124,7 +124,7 @@ public class GameLogic {
         return winner;
     }
 
-    private boolean checkNeighbourForWinner(char symbol, Location neighbourLocation, CheckDirection direction) throws ArrayIndexOutOfBoundsException{
+    protected boolean checkNeighbourForWinner(char symbol, Location neighbourLocation, CheckDirection direction) throws ArrayIndexOutOfBoundsException{
 
         if (symbol != board.getValueAt(neighbourLocation)) {
             return false;
@@ -133,7 +133,7 @@ public class GameLogic {
         return checkNeighbourForWinner(symbol, direction.getNextLocation(neighbourLocation), direction);
     }
 
-    private boolean checkDraw() {
+    protected boolean checkDraw() {
         for (int i = 0; i < board.getHeight(); i++) {
             for (int j = 0; j < board.getWidth(); j++) {
                 if (board.getValueAt(i, j) == ' ') {

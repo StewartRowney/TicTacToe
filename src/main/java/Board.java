@@ -41,7 +41,10 @@ public class Board {
                 }
             }
             if (i != height - 1) {
-                System.out.println("\n---+---+---");
+                StringBuilder builder = new StringBuilder();
+                builder.append("\n---");
+                builder.append("+---".repeat(Math.max(0, width - 1)));
+                System.out.println(builder);
             }
         }
         System.out.println("\n");
