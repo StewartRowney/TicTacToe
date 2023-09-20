@@ -46,9 +46,9 @@ public class TicTacToeGame {
         System.out.print("Enter Player 2 name: ");
         String playerTwoName = myScanner.nextLine();
 
-        int mapsize = validateIntInput("Enter map size minimum 3: ");
+        int mapSize = validateIntInput("Enter map size minimum 3: ");
 
-        GameLogic logic = new GameLogic(new Player(playerOneName, 'X'), new Player(playerTwoName, 'O'), mapsize);
+        GameLogic logic = new GameLogic(new Player(playerOneName, 'X'), new Player(playerTwoName, 'O'), mapSize);
         logic.startGame();
     }
 
