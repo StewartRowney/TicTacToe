@@ -1,3 +1,7 @@
+package enums;
+
+import models.Location;
+
 public enum CheckDirection {
     NORTH {public Location getNextLocation(Location location) {return new Location(location.row() - 1, location.column());}},
     NORTH_EAST {public Location getNextLocation(Location location) {return new Location(location.row() - 1, location.column() + 1);}},

@@ -1,3 +1,5 @@
+import models.Player;
+
 import java.util.Scanner;
 
 public class TicTacToeGame {
@@ -40,10 +42,10 @@ public class TicTacToeGame {
 
         System.out.print("""
                 This is a 2 player game!
-                Enter Player 1 name:\s""");
+                Enter models.Player 1 name:\s""");
         String playerOneName = myScanner.nextLine();
 
-        System.out.print("Enter Player 2 name: ");
+        System.out.print("Enter models.Player 2 name: ");
         String playerTwoName = myScanner.nextLine();
 
         int mapSize = validateMapSizeInput(3, 15);

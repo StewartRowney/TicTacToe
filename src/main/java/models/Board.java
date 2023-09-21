@@ -1,10 +1,12 @@
+package models;
+
 public class Board {
 
     private final char[][] board;
     private final int height;
     private final int width;
 
-    Board(int mapSize) {
+    public Board(int mapSize) {
         height = mapSize;
         width = mapSize;
         board = new char[height][width];
@@ -41,9 +43,7 @@ public class Board {
                 }
             }
             if (i != height - 1) {
-                StringBuilder builder = new StringBuilder();
-                builder.append("\n---");
-                builder.append("+---".repeat(Math.max(0, width - 1)));
+                String builder = "\n---" + "+---".repeat(Math.max(0, width - 1));
                 System.out.println(builder);
             }
         }

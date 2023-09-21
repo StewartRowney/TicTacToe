@@ -1,3 +1,9 @@
+import enums.CheckDirection;
+import enums.CheckLine;
+import models.Board;
+import models.Location;
+import models.Player;
+
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.Scanner;
@@ -25,7 +31,7 @@ public class GameLogic {
 
             if (checkLocationForWinner(location)){
                 gameFinished = true;
-                System.out.println("You are a winner: " + player.getPlayerName());
+                System.out.println("You are a winner: " + player.playerName());
             }
             else if (checkDraw()){
                 gameFinished = true;
@@ -42,13 +48,13 @@ public class GameLogic {
     }
 
     private Location makeMove(Player player) {
-        System.out.printf("%s's turn\n", player.getPlayerName());
+        System.out.printf("%s's turn\n", player.playerName());
         int row = validateIntInput("Enter row: ");
         int column = validateIntInput("Enter column: ");
         Location location = new Location(row, column);
 
         if (validateMove(location)) {
-            board.addPieceToBoard(player.getPlayerCharacter(), location);
+            board.addPieceToBoard(player.playerCharacter(), location);
             board.printBoard();
             return location;
         }
@@ -58,7 +64,7 @@ public class GameLogic {
         }
     }
 
-    private boolean validateMove(Location location) {
+    protected boolean validateMove(Location location) {
         return (board.getValueAt(location) == ' ');
     }
 
