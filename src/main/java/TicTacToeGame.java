@@ -46,7 +46,7 @@ public class TicTacToeGame {
         System.out.print("Enter Player 2 name: ");
         String playerTwoName = myScanner.nextLine();
 
-        int mapSize = validateIntInput("Enter map size minimum 3: ");
+        int mapSize = validateMapSizeInput(3, 15);
 
         GameLogic logic = new GameLogic(new Player(playerOneName, 'X'), new Player(playerTwoName, 'O'), mapSize);
         logic.startGame();
@@ -68,21 +68,22 @@ public class TicTacToeGame {
                                                                                                         \s""");
     }
 
-    private int validateIntInput(String question) {
+    private int validateMapSizeInput(int minSize, int maxSize) {
+        String question = String.format("Enter map size (minimum %d, maximum %d: ", minSize, maxSize);
         System.out.print(question);
         String input = myScanner.nextLine();
         int number;
 
         try {
             number = Integer.parseInt(input);
-            if (number < 3 ) {
+            if (number < minSize || number > maxSize) {
                 System.out.println("Enter a valid input");
-                return validateIntInput(question);
+                return validateMapSizeInput(minSize, maxSize);
             }
         }
         catch (IllegalArgumentException ex) {
             System.out.println("Enter a valid input");
-            return validateIntInput(question);
+            return validateMapSizeInput(minSize, maxSize);
         }
 
         return number;
